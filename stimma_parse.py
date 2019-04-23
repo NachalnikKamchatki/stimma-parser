@@ -28,10 +28,34 @@ def get_soup(html, parser):
     else:
         return None
 
+
 def parse(soup):
+    products = []
     if soup:
         divs = soup.find_all('div', class_="product-h")
-        print(len(divs))
+
+        for div in divs:
+            try:
+                title = div.find('h2', class_="woocommerce-loop-product__title").text
+                href = div.find('a')['href']
+                img_link = div.find('img', class_="attachment-woocommerce_thumbnail size-woocommerce_thumbnail")['src']
+                price = div.find('span', class_="price").text
+                products.append(
+                    {
+                        'title': title.strip(),
+                        'href': href.strip(),
+                        'image_link': img_link.strip(),
+                        'price': price.strip(),
+                    }
+
+                )
+            except:
+                pass
+
+        print(len(products))
+        for product in products:
+            print(product)
+
     else:
         print('ERROR!!! ERROR!!!')
 
@@ -39,3 +63,4 @@ if __name__ == '__main__':
    html = get_html(base_url)
    soup = get_soup(html, 'lxml')
    parse(soup)
+
