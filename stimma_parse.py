@@ -94,7 +94,7 @@ if __name__ == '__main__':
             print('passed')
             pass
 
-    files_writer(results, 'parsed_products.csv'
+    files_writer(results, 'parsed_products.csv')
 
 
 
