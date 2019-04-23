@@ -28,6 +28,16 @@ def get_soup(html, parser):
     else:
         return None
 
+# getting count of pages
+
+def get_pages(soup):
+    urls = []
+    if soup:
+        nav_links = soup.find('div', class_="nav-links")
+        pages_count = int(nav_links.find_all('a')[-2].text)
+    return pages_count
+
+# parsing data
 
 def parse(soup):
     products = []
@@ -49,18 +59,30 @@ def parse(soup):
                     }
 
                 )
+
             except:
                 pass
-
-        print(len(products))
-        for product in products:
-            print(product)
-
+        return products
     else:
         print('ERROR!!! ERROR!!!')
 
+
+
 if __name__ == '__main__':
-   html = get_html(base_url)
-   soup = get_soup(html, 'lxml')
-   parse(soup)
+    results = []
+    html = get_html(base_url)
+    soup = get_soup(html, 'lxml')
+    count_pages = get_pages(soup)
+    for i in range(1, count_pages):
+        print('Page' + str(i))
+        html = get_html(base_url + '/page/' + str(i))
+        soup = get_soup(html, 'lxml')
+        products = parse(soup)
+        try:
+            results.extend(products)
+        except:
+            pass
+
+
+
 
