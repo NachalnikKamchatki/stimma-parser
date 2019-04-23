@@ -39,7 +39,6 @@ def get_pages(soup):
 
 # parsing data
 
-
 def parse(soup):
     products = []
     if soup:
@@ -67,15 +66,6 @@ def parse(soup):
     else:
         print('ERROR!!! ERROR!!!')
 
-# recording data to csv_file
-
-
-def files_writer(results, filename):
-    with open(filename, 'w', encoding='utf-8', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow(('Название вакансии', 'URL', 'Название компании', 'Цена'))
-        for result in results:
-            writer.writerow((result['title'], result['href'], result['image_link'], result['price'],))
 
 
 if __name__ == '__main__':
@@ -84,16 +74,14 @@ if __name__ == '__main__':
     soup = get_soup(html, 'lxml')
     count_pages = get_pages(soup)
     for i in range(1, count_pages):
-        print('Page ' + str(i))
+        print('Page' + str(i))
         html = get_html(base_url + '/page/' + str(i))
         soup = get_soup(html, 'lxml')
         products = parse(soup)
         try:
             results.extend(products)
         except:
-            print('passed')
             pass
-    files_writer(results, 'parsed_products.csv')
 
 
 
