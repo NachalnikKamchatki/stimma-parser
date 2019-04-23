@@ -28,7 +28,14 @@ def get_soup(html, parser):
     else:
         return None
 
-
+def parse(soup):
+    if soup:
+        divs = soup.find_all('div', class_="product-h")
+        print(len(divs))
+    else:
+        print('ERROR!!! ERROR!!!')
 
 if __name__ == '__main__':
-    print(get_html(base_url))
+   html = get_html(base_url)
+   soup = get_soup(html, 'lxml')
+   parse(soup)
