@@ -10,10 +10,25 @@ headers = {'accept': '*/*',
 
 base_url = 'https://www.stimma.com.ua/shop'
 
+# HTML
+
 def get_html(url):
     session = requests.Session()
     request = session.get(url, headers=headers)
-    return request.text
+    if request.status_code == 200:
+        return request.text
+    return None
+
+# soup
+
+def get_soup(html, parser):
+    if html:
+        soup = bs(html, parser)
+        return soup
+    else:
+        return None
+
+
 
 if __name__ == '__main__':
     print(get_html(base_url))
