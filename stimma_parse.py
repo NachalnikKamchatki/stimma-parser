@@ -67,7 +67,6 @@ def parse(soup):
         print('ERROR!!! ERROR!!!')
 
 
-
 if __name__ == '__main__':
     results = []
     html = get_html(base_url)
